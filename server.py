@@ -2,7 +2,7 @@
 """AgentAudit MCP — Immutable audit trail for agent-to-agent interactions with hash chain verification."""
 
 import json, os, hashlib, time, datetime
-from mcp.server import Server, stdio_server
+from mcp.server.lowlevel import Server, stdio_server
 
 server = Server("agent-audit-mcp")
 DATA_DIR = os.path.expanduser("~/.agentaudit")

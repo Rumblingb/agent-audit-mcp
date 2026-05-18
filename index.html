@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentAudit MCP — Immutable Audit Trail for AI Agents</title>
+<meta name="description" content="Cryptographic audit trail for AI agents. Every event is hashed into an immutable SHA-256 chain. Detect tampering, prove what happened, comply with regulati...">
+<meta property="og:title" content="AgentAudit MCP">
+<meta property="og:description" content="Cryptographic audit trail for AI agents. Every event is hashed into an immutable SHA-256 chain. Detect tampering, prove ...">
+<meta property="og:url" content="https://rumblingb.github.io/agent-audit-mcp/">
+<link rel="canonical" href="https://rumblingb.github.io/agent-audit-mcp/">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a0f;color:#e0e0e0;line-height:1.6}
+.container{max-width:920px;margin:0 auto;padding:2rem 1.5rem}
+.hero{text-align:center;padding:5rem 0 3rem}
+.hero h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,#7c3aed,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+.hero p{font-size:1.15rem;color:#888;max-width:680px;margin:0 auto 2rem}
+.badges{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.badge{padding:.35rem 1rem;border-radius:99px;font-size:.85rem;font-weight:600}
+.badge-mcp{background:rgba(124,58,237,.15);color:#a78bfa}
+.badge-free{background:rgba(34,197,94,.15);color:#4ade80}
+.badge-pro{background:rgba(6,182,212,.15);color:#22d3ee}
+.badge-enterprise{background:rgba(245,158,11,.15);color:#fbbf24}
+.cta{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;transition:all .2s}
+.cta-primary{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,58,237,.3)}
+.cta-secondary{background:rgba(255,255,255,.06);color:#e0e0e0;border:1px solid rgba(255,255,255,.1)}
+.cta-secondary:hover{background:rgba(255,255,255,.1)}
+.cta-group{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.section{margin:4rem 0}
+.section h2{font-size:1.6rem;margin-bottom:1.5rem;text-align:center;color:#c0c0c0}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem}
+.tool-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.5rem;transition:all .2s}
+.tool-card:hover{border-color:rgba(124,58,237,.3)}
+.tool-card h3{color:#a78bfa;font-size:.95rem;margin-bottom:.5rem}
+.tool-card p{color:#888;font-size:.85rem}
+.pricing-cards{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+.price-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:2rem;width:280px;text-align:center}
+.price-card.featured{border-color:#7c3aed;background:rgba(124,58,237,.08)}
+.price-card h3{font-size:1.1rem;margin-bottom:.5rem;color:#e0e0e0}
+.price{font-size:2.5rem;font-weight:800;margin:.5rem 0;color:#fff}
+.price span{font-size:1rem;font-weight:400;color:#888}
+.price-card ul{list-style:none;margin:1.5rem 0}
+.price-card li{padding:.4rem 0;font-size:.9rem;color:#999}
+.price-card li::before{content:"\2713 ";color:#4ade80}
+.install-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:2rem;margin:3rem 0}
+.install-box h2{margin-bottom:1rem;text-align:left}
+.install-box pre{background:rgba(0,0,0,.4);padding:1rem 1.5rem;border-radius:8px;overflow-x:auto;font-family:'SF Mono','Fira Code',monospace;font-size:.85rem;color:#c0c0c0}
+.install-box code{color:#22d3ee}
+.cta-btn{display:inline-block;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;margin:.5rem;text-align:center}
+.cta-btn.primary{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;display:block}
+.cta-btn.secondary{background:transparent;border:1px solid rgba(255,255,255,.15);color:#e0e0e0;display:block}
+.cta-btn.secondary:hover{background:rgba(255,255,255,.06)}
+.smithery-badge{text-align:center;margin:2rem 0}
+.smithery-badge a{display:inline-block}
+.usecase-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:2rem;margin:2rem 0}
+.usecase-box h3{color:#22d3ee;margin-bottom:.75rem}
+.usecase-box p{color:#888;font-size:.9rem}
+.usecase-box code{background:rgba(6,182,212,.1);padding:.15rem .4rem;border-radius:4px;font-size:.85rem;color:#22d3ee}
+footer{text-align:center;padding:3rem 0;color:#666;font-size:.85rem;border-top:1px solid rgba(255,255,255,.06);margin-top:3rem}
+footer a{color:#a78bfa;text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:600px){.hero h1{font-size:2rem}.pricing-cards{flex-direction:column;align-items:center}.tools-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+<h1>🔐 Agent Audit MCP</h1>
+<p>Cryptographic audit trail for AI agents. Every event is hashed into an immutable SHA-256 chain. Detect tampering, prove what happened, comply with regulations — all from your MCP-compatible AI client.</p>
+<div class="badges">
+<span class="badge badge-mcp">MCP Server</span>
+<span class="badge badge-free">200 Free/Day</span>
+<span class="badge badge-pro">$19/mo Pro</span>
+</div>
+<div class="cta-group">
+<a href="https://github.com/Rumblingb/agent-audit-mcp" class="cta cta-secondary">GitHub →</a>
+<a href="https://buy.stripe.com/dRm6oJ4Hd2Jugek0wz1oI0m" class="cta cta-primary">Subscribe Pro — $19/mo</a>
+</div>
+</div>
+
+<div class="smithery-badge"><a href="https://smithery.ai/servers/vishar-rumbling/agent-audit-mcp"><img src="https://smithery.ai/badge/vishar-rumbling/agent-audit-mcp" alt="Smithery Badge" style="max-width:200px"></a></div>
+
+
+<div class="section">
+<h2>🔧 Available Tools</h2>
+<div class="tools-grid">
+<div class="tool-card"><h3>audit_log</h3><p>Log events with hash chain — 15 event types, 5 severity levels</p></div>
+<div class="tool-card"><h3>audit_get_event</h3><p>Retrieve full event details by ID</p></div>
+<div class="tool-card"><h3>audit_search</h3><p>Search by agent, type, date range, or severity</p></div>
+<div class="tool-card"><h3>audit_verify_chain</h3><p>Verify hash chain integrity between any two events</p></div>
+<div class="tool-card"><h3>audit_stats</h3><p>Get audit trail statistics and health metrics</p></div>
+</div>
+</div>
+
+
+<div class="section">
+<h2>💰 Simple Pricing</h2>
+<div class="pricing-cards">
+<div class="price-card">
+<h3>🆓 Free</h3>
+<div class="price">$0<span>/mo</span></div>
+<ul>
+<li>200 queries per day</li>
+<li>All core tools</li>
+<li>Standard rate limits</li>
+<li>Community support</li>
+</ul>
+<a href="https://github.com/Rumblingb/agent-audit-mcp" class="cta-btn secondary">Get Started</a>
+</div>
+<div class="price-card featured">
+<h3>⭐ Pro</h3>
+<div class="price">$19<span>/mo</span></div>
+<ul>
+<li>Unlimited queries</li>
+<li>All tools included</li>
+<li>Priority support</li>
+<li>Early feature access</li>
+</ul>
+<a href="https://buy.stripe.com/dRm6oJ4Hd2Jugek0wz1oI0m" class="cta-btn primary">Subscribe →</a>
+</div>
+</div>
+</div>
+
+<div class="usecase-box">
+<h3>💡 Example Usage</h3>
+<p>Configure this MCP server in your AI client (Claude Desktop, Cursor, VS Code + Continue, etc.) and ask:</p>
+<p style="margin-top:.75rem;font-size:.9rem;color:#999"><em>Describe natural language interactions your AI assistant can use with this server.</em></p>
+</div>
+
+
+<div class="install-box">
+<h2>⚡ Quick Install</h2>
+<pre><code>git clone https://github.com/Rumblingb/agent-audit-mcp.git
+cd agent-audit-mcp
+pip install -r requirements.txt
+python3 server.py</code></pre>
+</div>
+
+<footer>
+<p>Agent Audit MCP &mdash; <a href="https://github.com/Rumblingb/agent-audit-mcp">GitHub</a></p>
+<p style="margin-top:.5rem">Part of the <a href="https://rumblingb.github.io/agentpay-labs-hub/">Rumblingb MCP Ecosystem</a> — 67+ MCP servers for AI agents</p>
+</footer>
+
+</div>
+</body>
+</html>
