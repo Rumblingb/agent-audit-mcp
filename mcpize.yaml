@@ -7,11 +7,9 @@ description: >-
   happened, comply with regulations.
 runtime: python
 entry: server.py
-build:
-  install: pip install -r requirements.txt
 startCommand:
   type: stdio
-  command: python
+  command: python3
   args:
     - server.py
     - '--pro-key'
