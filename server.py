@@ -2,9 +2,9 @@
 """AgentAudit MCP — Immutable audit trail for agent-to-agent interactions with hash chain verification."""
 
 import json, os, hashlib, time, datetime
-from mcp.server.lowlevel import Server, stdio_server
+from mcp.server.fastmcp import FastMCP
 
-server = Server("agent-audit-mcp")
+server = FastMCP("agent-audit-mcp")
 DATA_DIR = os.path.expanduser("~/.agentaudit")
 os.makedirs(DATA_DIR, exist_ok=True)
 CHAIN_FILE = os.path.join(DATA_DIR, "chain.json")
@@ -40,17 +40,6 @@ def _hash_event(event):
 @server.tool(
     name="audit_log",
     description="Log an agent-to-agent event with hash chain verification. Returns event_id and proof hash.",
-    input_schema={
-        "type": "object",
-        "properties": {
-            "event_type": {"type": "string", "enum": EVENT_TYPES, "description": "Type of event"},
-            "agent_id": {"type": "string", "description": "ID of the agent involved"},
-            "details_json": {"type": "string", "description": "JSON string with event details"},
-            "severity": {"type": "string", "enum": SEVERITIES, "default": "info"},
-            "related_agent_id": {"type": "string", "description": "Other agent involved (optional)"}
-        },
-        "required": ["event_type", "agent_id"]
-    }
 )
 async def audit_log(event_type: str, agent_id: str, details_json: str = "{}", severity: str = "info", related_agent_id: str = "") -> str:
     try:
@@ -93,13 +82,6 @@ async def audit_log(event_type: str, agent_id: str, details_json: str = "{}", se
 @server.tool(
     name="audit_get_event",
     description="Get full details of a specific audit event by event_id.",
-    input_schema={
-        "type": "object",
-        "properties": {
-            "event_id": {"type": "string", "description": "Event ID to look up"}
-        },
-        "required": ["event_id"]
-    }
 )
 async def audit_get_event(event_id: str) -> str:
     try:
@@ -114,17 +96,6 @@ async def audit_get_event(event_id: str) -> str:
 @server.tool(
     name="audit_search",
     description="Search audit events by agent, type, date range, or severity.",
-    input_schema={
-        "type": "object",
-        "properties": {
-            "agent_id": {"type": "string", "description": "Filter by agent ID"},
-            "event_type": {"type": "string", "enum": [""] + EVENT_TYPES, "description": "Filter by event type"},
-            "from_date": {"type": "string", "description": "Start date (ISO format, e.g. 2026-01-01)"},
-            "to_date": {"type": "string", "description": "End date (ISO format)"},
-            "severity": {"type": "string", "enum": [""] + SEVERITIES, "description": "Filter by severity"},
-            "max_results": {"type": "integer", "default": 50}
-        }
-    }
 )
 async def audit_search(agent_id: str = "", event_type: str = "", from_date: str = "", to_date: str = "", severity: str = "", max_results: int = 50) -> str:
     try:
@@ -155,14 +126,6 @@ async def audit_search(agent_id: str = "", event_type: str = "", from_date: str 
 @server.tool(
     name="audit_get_agent_history",
     description="Get complete event history for a specific agent.",
-    input_schema={
-        "type": "object",
-        "properties": {
-            "agent_id": {"type": "string", "description": "Agent ID to get history for"},
-            "max_events": {"type": "integer", "default": 100}
-        },
-        "required": ["agent_id"]
-    }
 )
 async def audit_get_agent_history(agent_id: str, max_events: int = 100) -> str:
     try:
@@ -173,14 +136,6 @@ async def audit_get_agent_history(agent_id: str, max_events: int = 100) -> str:
 @server.tool(
     name="audit_verify_chain",
     description="Verify the hash chain integrity between two events. Detects tampering.",
-    input_schema={
-        "type": "object",
-        "properties": {
-            "from_event_id": {"type": "string", "description": "Start event ID"},
-            "to_event_id": {"type": "string", "description": "End event ID"}
-        },
-        "required": ["from_event_id", "to_event_id"]
-    }
 )
 async def audit_verify_chain(from_event_id: str, to_event_id: str) -> str:
     try:
@@ -242,10 +197,6 @@ async def audit_verify_chain(from_event_id: str, to_event_id: str) -> str:
 @server.tool(
     name="audit_stats",
     description="Get audit trail statistics: total events, by type, by severity.",
-    input_schema={
-        "type": "object",
-        "properties": {}
-    }
 )
 async def audit_stats() -> str:
     try:
@@ -273,12 +224,5 @@ async def audit_stats() -> str:
     except Exception as e:
         return json.dumps({"error": str(e), "isError": True}, indent=2)
 
-def main():
-    import anyio
-    async def run():
-        async with stdio_server() as streams:
-            await server.run(streams[0], streams[1], server.create_initialization_options())
-    anyio.run(run)
-
 if __name__ == "__main__":
-    main()
+    server.run(transport='stdio')
