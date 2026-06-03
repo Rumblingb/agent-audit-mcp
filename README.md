@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" width="80" alt="AgentPay">
+</p>
+
 # AgentAudit MCP
 
 Your agent now has an immutable, tamper-evident log of every action it takes — each event cryptographically linked to the previous one so any modification breaks the chain and is immediately detectable.
