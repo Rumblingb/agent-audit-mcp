@@ -1,11 +1,6 @@
+runtime: "container"
 startCommand:
-  type: stdio
-  configSchema:
-    type: object
-    properties:
-      proKey:
-        type: string
-        description: "Pro key for unlimited usage"
-        default: ""
-  commandFunction: |
-    (config) => ({command: 'python3', args: ['server.py', '--pro-key', config.proKey || '']})
+  type: "stdio"
+  command: "node"
+  args: ["index.js"]
+description: "Tamper-evident audit trail for AI agents. Every action hashed into an immutable chain. Prove what happened — to your boss, auditor, or courtroom."
